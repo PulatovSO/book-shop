@@ -4,9 +4,71 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/form.css">
     <title>Delivery</title>
 </head>
 <body>
-    <h1>Delivery</h1>
+    <div class="info">
+        <div class="info-inner">
+            <h3 class="info-title">
+                The order created <i class='bx bxs-check-circle'></i>
+            </h3>
+        </div>
+    </div>
+    <div class="container">
+
+        <form action="/" id="form">
+            <h1 class="form-title">Order form</h1>
+            <div class="form-block">
+                <label for="firstname">Firstname:</label>
+                <span class="error">The field is invalid</span>
+                <input class="input name" id="firstname" name="Firstname" type="text" placeholder="Firstname">
+            </div>
+            <div class="form-block">
+                <label for="lastname">Lastname:</label>
+                <span class="error">The field is invalid</span>
+                <input class="input name" id="lastname" name="Lastname" type="text" placeholder="Lastname">
+            </div>
+            <div class="form-block">
+                <label for="date">Delivery date:</label>
+                <span class="error">The field is invalid</span>
+                <input class="input" id="date" name="Date" type="date">
+            </div>
+            <div class="form-block">
+                <label for="street">Street:</label>
+                <span class="error">The field is invalid</span>
+                <input class="input address" id="street" name="Street" type="text" placeholder="Street Name">
+            </div>
+            <div class="form-inner-wrap">
+                <div class="form-block">
+                    <label for="house">House number:</label>
+                    <span class="error">The field is invalid</span>
+                    <input class="input address" id="house" name="House-number" type="number" placeholder="House number">
+                </div>
+                <div class="form-block">
+                    <label for="flat">Flat number:</label>
+                    <span class="error">The field is invalid</span>
+                    <input class="input address" id="flat" name="Flat-number" type="number" placeholder="Flat number">
+                </div>
+            </div>
+            <div class="form-block payment-block">
+                <div class="payment-type">
+                    <label for="card">Card</label>
+                    <input id="card" name="Payment" type="radio">
+                </div>
+                <div class="payment-type">
+                    <label for="cash">Cash</label>
+                    <input id="cash" name="Payment" type="radio">
+                </div>
+            </div>
+    
+            <button class="complete" disabled>Complete</button>
+        </form>
+    </div>
+
+    <script src="../js/form.js"></script>
 </body>
 </html>
