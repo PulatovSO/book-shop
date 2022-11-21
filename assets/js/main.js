@@ -5,20 +5,20 @@ let bodyFr = document.createDocumentFragment(); // Fragment
 let body = document.getElementsByTagName('body')[0]
 
 let header = document.createElement('header');
-header.className = 'header';
+header.classList.add('header');
 
 let title = document.createElement('h1');
 title.innerHTML = 'Book<span>Shop</span>';
-title.className = 'title';
+title.classList.add('title');
 
 let cartWrap = document.createElement('div');
-cartWrap.className = 'cart-wrap';
+cartWrap.classList.add('cart-wrap');
 
 let cartBadge = document.createElement('span');
 cartBadge.textContent = '0';
 
 let cartBtn = document.createElement('button');
-cartBtn.className = 'cart-btn';
+cartBtn.classList.add('cart-btn');
 cartBtn.innerHTML = "<i class='bx bxs-shopping-bag-alt'></i>"
 
 cartWrap.appendChild(cartBtn);
@@ -30,29 +30,29 @@ bodyFr.appendChild(header);
 
 /*=============== CREATE CART ===============*/
 let cart = document.createElement('div');
-cart.className = 'cart';
+cart.classList.add('cart');
 bodyFr.appendChild(cart);
 
 let cartClose = document.createElement('button');
 cartClose.innerHTML = "<i class='bx bx-x'></i>";
-cartClose.className = 'cart-close';
+cartClose.classList.add('cart-close');
 cart.appendChild(cartClose)
 
 let cartList = document.createElement('ul');
-cartList.className = 'cart-list';
+cartList.classList.add('cart-list');
 cart.appendChild(cartList);
 
 let cartBottom = document.createElement('div');
-cartBottom.className = 'cart-bottom';
+cartBottom.classList.add('cart-bottom');
 
 let cartTotal = document.createElement('span');
-cartTotal.className = 'cart-total';
+cartTotal.classList.add('cart-total');
 cartTotal.textContent = 'Total: 0';
 
 let cartOrderBtn = document.createElement('a');
 cartOrderBtn.setAttribute('href', './assets/pages/delivery.html')
 cartOrderBtn.setAttribute('target', '_blank')
-cartOrderBtn.className = 'cart-order-btn';
+cartOrderBtn.classList.add('cart-order-btn');
 cartOrderBtn.textContent = 'Confirm order';
 
 cartBottom.appendChild(cartTotal);
@@ -71,13 +71,13 @@ cartClose.addEventListener('click', () => {
 
 /*=============== CREATE CONTAINER & BOOKLIST ===============*/
 let container = document.createElement('div');
-container.className = 'container';
+container.classList.add('container');
 
 let bookList = document.createElement('ul');
-bookList.className = 'book-list';
+bookList.classList.add('book-list');
 
 let bookItem = document.createElement('li');
-bookItem.className = 'book-item';
+bookItem.classList.add('book-item');
 
 container.appendChild(bookList);
 body.appendChild(container)
@@ -106,21 +106,21 @@ bookList.appendChild(booksfragment)
 
 /*=============== CREATE MODAL ===============*/
 let modal = document.createElement('div');
-modal.className = 'modal';
+modal.classList.add('modal');
 
 let modalInner = document.createElement('div');
-modalInner.className = 'modal-inner';
+modalInner.classList.add('modal-inner');
 
 let modalTop = document.createElement('div');
-modalTop.className = 'modal-top';
+modalTop.classList.add('modal-top');
 
 let modalTitle = document.createElement('h3');
-modalTitle.className = 'modal-title';
-modalTitle.textContent = 'Description'
+modalTitle.classList.add('modal-title');
+modalTitle.textContent = 'Description';
 
 let closeBtn = document.createElement('button');
 closeBtn.innerHTML = "<i class='bx bx-x'></i>";
-closeBtn.className = 'close-btn';
+closeBtn.classList.add('close-btn');
 
 modalTop.appendChild(modalTitle)
 modalTop.appendChild(closeBtn)
@@ -150,9 +150,79 @@ closeBtn.addEventListener('click', () => {
 })
 
 
+/*=============== ADD & REMOVE ITEMS FROM CART ===============*/
+let cartData = [];
+let cartFragment = document.createDocumentFragment()
+let addBtn = document.querySelectorAll('.book-btn-cart');
+let cartItem = document.createElement('li');
+cartItem.classList.add('cart-item');
+
+addBtn.forEach(a => {
+    a.addEventListener('click', () => {
+        for (let item of Data) {
+            if (a.name == item.id) {
+                cartData.push(item)
+            }
+        }
+
+        let cartDataSet = [...new Set(cartData)];
+
+        // ADD TO CART
+        for (let item of cartDataSet) {
+            if (a.name == item.id) {
+                let book = cartItem.cloneNode(true);
+                book.innerHTML = `
+                    <img src="${item.imageLink}" alt="book" class="cart-item-image">
+                    <div class="cart-item-info">
+                        <h3 class="cart-item-title">${item.title}</h3>
+                        <p class="cart-item-author">${item.author}</p>
+                    </div>
+                    <span class="cart-item-price">$${item.price}</span>
+                    <button class="cart-item-remove">
+                        <i class='bx bx-x'></i>
+                    </button>
+                `
+                book.setAttribute('id', `${item.id}`);
+                book.setAttribute('data-price', `${item.price}`);
+                cartFragment.appendChild(book);
+            }
+        }
+        cartList.appendChild(cartFragment)
+
+        // REMOVE FROM CART
+        let removeItems = document.querySelectorAll('.cart-item-remove');
+        for(let item of removeItems) {
+            item.addEventListener('click', () => {
+                cartData = cartData.filter(a => a.id != item.parentElement.id)
+                item.parentElement.remove()
+                sumPrice()
+            })
+        }
+
+        // SUM TOTAL AMOUNT
+        function sumPrice() {
+            let sum = 0;
+            let selectedItems = document.querySelectorAll('.cart-item');
+
+            for(let item of selectedItems) {
+                sum += +item.dataset.price
+            }
+
+            cartTotal.textContent = `Total: $${sum}`
+
+            cartBadge.textContent = `${
+                Object.keys(selectedItems).length
+            }`
+        }
+        sumPrice()
+
+    })
+})
+
+
 /*=============== CREATE FOOTER ===============*/
 let footer = document.createElement('footer');
-footer.className = 'footer';
+footer.classList.add('footer');
 footer.innerHTML = '<span class="footer-copy">&copy; Created by Pulatoff</span>';
 bodyFr.appendChild(footer);
 
