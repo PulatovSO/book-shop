@@ -77,7 +77,7 @@ button {
   border-radius: 10px;
   transition: all 0.2s ease-in-out;
   box-shadow: 0px 0px 40px 10px #223c5033;
-  cursor: grab;
+  cursor: move;
 }
 
 .book-item:hover {
@@ -394,4 +394,73 @@ button {
   text-align: center;
   background-color: #008dff;
   color: #fff;
+}
+
+/* animations */
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(1000px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-bottom {
+  0% {
+    transform: translate(-50%, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -25%);
+    opacity: 1;
+  }
+}
+
+/* scroll style */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 6px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #47acff;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00cd98;
+}
+::-webkit-scrollbar-track {
+  background: #ffffff;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+
+/* Media queries */
+
+@media screen and (max-width: 1182px) {
+  .book-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .book-image {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 855px) {
+  .book-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
