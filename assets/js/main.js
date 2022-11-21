@@ -65,9 +65,43 @@ cartBtn.addEventListener('click', () => {
 })
 
 cartClose.addEventListener('click', () => {
-    cart.style.right = '-400px';
+    cart.style.right = '-430px';
 })
 
+
+/*=============== CREATE CONTAINER & BOOKLIST ===============*/
+let container = document.createElement('div');
+container.className = 'container';
+
+let bookList = document.createElement('ul');
+bookList.className = 'book-list';
+
+let bookItem = document.createElement('li');
+bookItem.className = 'book-item';
+
+container.appendChild(bookList);
+bodyFr.appendChild(container)
+
+//  BOOKS FRAGMENT
+let booksfragment = document.createDocumentFragment()
+
+
+Data.forEach(item => {
+    let book = bookItem.cloneNode(true)
+        book.innerHTML = `
+            <img src="${item.imageLink}" alt="book" class="book-image">
+            <h3 class="book-title">${item.title}</h3>
+            <p class="book-author">${item.author}</p>
+            <span class="book-price">Price: $${item.price}</span>
+            <button name="${item.id}" class="book-btn-cart">
+                <i class='bx bxs-cart-alt'></i>
+            </button>
+            <button id="${item.id}" class="book-btn">Show more..</button>
+        `
+    booksfragment.appendChild(book)
+})
+
+bookList.appendChild(booksfragment)
 
 
 /*=============== CREATE FOOTER ===============*/

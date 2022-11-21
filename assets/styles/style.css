@@ -57,13 +57,109 @@ button {
   color: #fff;
 }
 
+/* book catalog list */
+.book-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 50px;
+}
+
+.book-item {
+  position: relative;
+  padding: 15px;
+  background: #ffffff;
+  border-radius: 10px;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0px 0px 40px 10px #223c5033;
+  cursor: grab;
+}
+
+.book-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0px 10px 40px 20px #223c5033;
+}
+
+.book-item:hover .book-btn-cart {
+  opacity: 1;
+}
+
+.book-image {
+  width: 222px;
+  height: 290px;
+  border-radius: 0 5px 0 0 ;
+}
+
+.book-title {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 220px;
+  height: 1.2em;
+  white-space: nowrap;
+}
+
+.book-author {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 220px;
+  height: 1.2em;
+  white-space: nowrap;
+}
+
+.book-price {
+  padding: 5px;
+  margin-top: 10px;
+  display: inline-block;
+  font-weight: 500;
+  background-color: #008dff;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.book-btn-cart {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 28px;
+  background: #008dff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  transition: all 0.2s ease-in-out;
+  opacity: 0;
+}
+
+.book-btn-cart:hover {
+  background-color: #00cd98;
+}
+
+.book-btn {
+  padding: 5px;
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  background: #00cd98;
+  color: #fff;
+  border-radius: 5px;
+  border: none;
+}
+
+.book-btn:hover {
+  opacity: .7;
+}
 
 /* CART */
 .cart {
   padding-right: 5px;
   position: fixed;
   top: 0;
-  right: -400px;
+  right: -430px;
   width: 400px;
   height: 100%;
   background-color: #ffffff;
