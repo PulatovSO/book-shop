@@ -1,7 +1,7 @@
 import Data from './books.js';
 
 /*=============== CREATE HEADER ===============*/
-let bodyFr = document.createDocumentFragment();
+let bodyFr = document.createDocumentFragment(); // Fragment
 let body = document.getElementsByTagName('body')[0]
 
 let header = document.createElement('header');
@@ -65,7 +65,7 @@ cartBtn.addEventListener('click', () => {
 })
 
 cartClose.addEventListener('click', () => {
-    cart.style.right = '-430px';
+    cart.style.right = '-400px';
 })
 
 
@@ -80,7 +80,7 @@ let bookItem = document.createElement('li');
 bookItem.className = 'book-item';
 
 container.appendChild(bookList);
-bodyFr.appendChild(container)
+body.appendChild(container)
 
 //  BOOKS FRAGMENT
 let booksfragment = document.createDocumentFragment()
@@ -102,6 +102,52 @@ Data.forEach(item => {
 })
 
 bookList.appendChild(booksfragment)
+
+
+/*=============== CREATE MODAL ===============*/
+let modal = document.createElement('div');
+modal.className = 'modal';
+
+let modalInner = document.createElement('div');
+modalInner.className = 'modal-inner';
+
+let modalTop = document.createElement('div');
+modalTop.className = 'modal-top';
+
+let modalTitle = document.createElement('h3');
+modalTitle.className = 'modal-title';
+modalTitle.textContent = 'Description'
+
+let closeBtn = document.createElement('button');
+closeBtn.innerHTML = "<i class='bx bx-x'></i>";
+closeBtn.className = 'close-btn';
+
+modalTop.appendChild(modalTitle)
+modalTop.appendChild(closeBtn)
+modalInner.appendChild(modalTop)
+modal.appendChild(modalInner);
+body.appendChild(modal);
+
+// SHOW MODAL
+let buttons = document.querySelectorAll('.book-btn');
+let description = document.createElement('p');
+description.className = 'description';
+modalInner.appendChild(description);
+
+buttons.forEach(card => card.addEventListener('click', (e) => {
+    modal.style.display = 'block';
+
+    Data.forEach(a => {
+        if (a.id === +e.target.id) description.textContent = a.description
+    })
+
+    cart.style.right = '-400px';
+}))
+
+// CLOSE MODAL
+closeBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+})
 
 
 /*=============== CREATE FOOTER ===============*/
