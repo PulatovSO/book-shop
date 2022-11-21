@@ -65,7 +65,7 @@ cartBtn.addEventListener('click', () => {
 })
 
 cartClose.addEventListener('click', () => {
-    cart.style.right = '-400px';
+    cart.style.right = '-430px';
 })
 
 
