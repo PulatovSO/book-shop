@@ -223,7 +223,7 @@ addBtn.forEach(a => {
 /*=============== CREATE FOOTER ===============*/
 let footer = document.createElement('footer');
 footer.classList.add('footer');
-footer.innerHTML = '<span class="footer-copy">&copy; Created by Pulatoff</span>';
+footer.innerHTML = '<span class="footer-copy">&copy; Created by Pulatov</span>';
 bodyFr.appendChild(footer);
 
 body.appendChild(bodyFr);
