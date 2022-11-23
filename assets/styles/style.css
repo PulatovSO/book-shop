@@ -247,6 +247,7 @@ button {
   top: 50%;
   right: 100px;
   transform: translateY(-50%);
+  transition: all .1s ease-in-out;
 }
 
 .cart-wrap span {
@@ -261,6 +262,7 @@ button {
   background-color: #dc3545;
   color: #fff;
   border-radius: 50%;
+  transition: all .1s ease-in-out;
 }
 
 .cart-btn {
@@ -386,6 +388,44 @@ button {
 
 .cart-order-btn:hover {
   background-color: #00cd98;
+}
+
+
+/* drag and drop */
+.cart-drag {
+  top: 50px;
+  transform: translateY(0);
+  padding: 75px 52px;
+  background-color: rgba(255, 255, 255, 0.76);
+  backdrop-filter: blur(10px);
+  border: 3px dashed #dc3545;
+}
+
+.cart-drag i {
+  color: #7697b8;
+}
+
+.cart-drag-over {
+  border: 3px dashed #00cd98;
+}
+
+.cart-drag span {
+  opacity: 0;
+}
+
+.cart-dragover {
+  border: 2px dashed red;
+  background-color: #00000011;
+}
+
+.cartlist-drag-over {
+  border: 2px dashed #00cd98;
+  background-color: #00800025;
+}
+
+.cart-dragover > li,
+.cartlist-drag-over > li {
+  opacity: .3 !important;
 }
 
 

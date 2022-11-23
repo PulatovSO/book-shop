@@ -98,6 +98,8 @@ Data.forEach(item => {
             </button>
             <button id="${item.id}" class="book-btn">Show more..</button>
         `
+        book.setAttribute('draggable', 'true');
+        book.setAttribute('id',  `${item.id}`)
     booksfragment.appendChild(book)
 })
 
@@ -150,6 +152,83 @@ closeBtn.addEventListener('click', () => {
 })
 
 
+/*=============== DRAG & DROP TO CART ===============*/
+let draggables = document.querySelectorAll('.book-item');
+let dragging;
+
+draggables.forEach(book => {
+    book.addEventListener('dragstart', () => {
+        cartWrap.classList.add('cart-drag');
+        book.classList.add('dragging');
+        cartList.classList.add('cart-dragover');
+        dragging = book;
+    })
+
+    book.addEventListener('dragend', () => {
+        cartWrap.classList.remove('cart-drag');
+        cartWrap.classList.remove('cart-drag-over')
+        cartList.classList.remove('cart-dragover');
+        cartList.classList.remove('cartlist-drag-over')
+    })
+})
+
+cartWrap.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    cartWrap.classList.add('cart-drag-over');
+})
+
+cartWrap.addEventListener('dragleave', () => {
+    cartWrap.classList.remove('cart-drag-over');
+})
+
+cart.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    cartList.classList.add('cartlist-drag-over');
+})
+
+cart.addEventListener('dragleave', (e) => {
+    e.preventDefault();
+    cartList.classList.remove('cartlist-drag-over')
+})
+
+cartWrap.addEventListener('drop', (e) => {
+    e.preventDefault();
+    drop();
+})
+
+cart.addEventListener('drop', (e) => {
+    e.preventDefault();
+    drop();
+})
+
+function drop () {
+    Data.forEach(item => {
+        if(item.id == dragging.id) {
+            let draggedItem = document.createElement('li');
+            draggedItem.classList.add('cart-item');
+
+            draggedItem.innerHTML = `
+                <img src="${item.imageLink}" alt="book" class="cart-item-image">
+                <div class="cart-item-info">
+                    <h3 class="cart-item-title">${item.title}</h3>
+                    <p class="cart-item-author">${item.author}</p>
+                </div>
+                <span class="cart-item-price">$${item.price}</span>
+                <button class="cart-item-remove">
+                    <i class='bx bx-x'></i>
+                </button>
+            `
+            draggedItem.setAttribute('id', `${item.id}`);
+            draggedItem.setAttribute('data-price', `${item.price}`);
+            cartList.appendChild(draggedItem)
+            removeFromCart()
+            sumPrice()
+        }
+
+    })
+}
+
+
 /*=============== ADD & REMOVE ITEMS FROM CART ===============*/
 let cartData = [];
 let cartFragment = document.createDocumentFragment()
@@ -165,60 +244,66 @@ addBtn.forEach(a => {
             }
         }
 
-        let cartDataSet = [...new Set(cartData)];
-
-        // ADD TO CART
-        for (let item of cartDataSet) {
-            if (a.name == item.id) {
-                let book = cartItem.cloneNode(true);
-                book.innerHTML = `
-                    <img src="${item.imageLink}" alt="book" class="cart-item-image">
-                    <div class="cart-item-info">
-                        <h3 class="cart-item-title">${item.title}</h3>
-                        <p class="cart-item-author">${item.author}</p>
-                    </div>
-                    <span class="cart-item-price">$${item.price}</span>
-                    <button class="cart-item-remove">
-                        <i class='bx bx-x'></i>
-                    </button>
-                `
-                book.setAttribute('id', `${item.id}`);
-                book.setAttribute('data-price', `${item.price}`);
-                cartFragment.appendChild(book);
-            }
-        }
-        cartList.appendChild(cartFragment)
-
-        // REMOVE FROM CART
-        let removeItems = document.querySelectorAll('.cart-item-remove');
-        for(let item of removeItems) {
-            item.addEventListener('click', () => {
-                cartData = cartData.filter(a => a.id != item.parentElement.id)
-                item.parentElement.remove()
-                sumPrice()
-            })
-        }
-
-        // SUM TOTAL AMOUNT
-        function sumPrice() {
-            let sum = 0;
-            let selectedItems = document.querySelectorAll('.cart-item');
-
-            for(let item of selectedItems) {
-                sum += +item.dataset.price
-            }
-
-            cartTotal.textContent = `Total: $${sum}`
-
-            cartBadge.textContent = `${
-                Object.keys(selectedItems).length
-            }`
-        }
+        addToCart(a)
+        removeFromCart()
         sumPrice()
 
     })
 })
 
+// ADD TO CART
+function addToCart (a) {
+    let cartDataSet = [...new Set(cartData)];
+
+    for (let item of cartDataSet) {
+        if (a.name == item.id) {
+            let book = cartItem.cloneNode(true);
+            book.innerHTML = `
+                <img src="${item.imageLink}" alt="book" class="cart-item-image">
+                <div class="cart-item-info">
+                    <h3 class="cart-item-title">${item.title}</h3>
+                    <p class="cart-item-author">${item.author}</p>
+                </div>
+                <span class="cart-item-price">$${item.price}</span>
+                <button class="cart-item-remove">
+                    <i class='bx bx-x'></i>
+                </button>
+            `
+            book.setAttribute('id', `${item.id}`);
+            book.setAttribute('data-price', `${item.price}`);
+            cartFragment.appendChild(book);
+        }
+    }
+    cartList.appendChild(cartFragment)
+}
+
+// REMOVE FROM CART
+function removeFromCart () {
+    let removeItems = document.querySelectorAll('.cart-item-remove');
+    for(let item of removeItems) {
+        item.addEventListener('click', () => {
+            cartData = cartData.filter(a => a.id != item.parentElement.id)
+            item.parentElement.remove()
+            sumPrice()
+        })
+    }
+}
+
+// SUM TOTAL AMOUNT
+function sumPrice() {
+    let sum = 0;
+    let selectedItems = document.querySelectorAll('.cart-item');
+
+    for(let item of selectedItems) {
+        sum += +item.dataset.price
+    }
+
+    cartTotal.textContent = `Total: $${sum}`
+
+    cartBadge.textContent = `${
+        Object.keys(selectedItems).length
+    }`
+}
 
 /*=============== CREATE FOOTER ===============*/
 let footer = document.createElement('footer');
